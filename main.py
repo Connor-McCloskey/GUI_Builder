@@ -3,9 +3,9 @@ Checking out CustomTKinter and PyInstaller!
 @author Connor McCloskey
 
 To produce executable:
-pyinstaller --onefile -w -F NewGuiPlayground.py
+pyinstaller --onefile -w -F main.py
 --OR--
-pyinstaller NewGuiPlayground.spec
+pyinstaller GuiBuilder.spec
 """
 import customtkinter as ctk
 from tkinter import filedialog
@@ -58,7 +58,7 @@ class App(ctk.CTk):
         self.assets.append(self.save_button)
         self.assets.append(self.button_b)
 
-    def state_check(self, event):
+    def state_check(self, _event):
         if self.current_state != self.wm_state():
             self.current_state = self.wm_state()
             self.bounds_check(self.button_b)
