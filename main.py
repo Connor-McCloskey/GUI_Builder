@@ -61,7 +61,9 @@ class App(ctk.CTk):
     def state_check(self, _event):
         if self.current_state != self.wm_state():
             self.current_state = self.wm_state()
-            self.bounds_check(self.button_b)
+            # self.bounds_check(self.button_b)
+            for i in self.assets:
+                self.bounds_check(i)
 
     # noinspection PyMethodMayBeStatic
     def button_func(self) -> None:
