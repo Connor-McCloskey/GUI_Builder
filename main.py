@@ -1,5 +1,5 @@
 """
-Checking out CustomTKinter and PyInstaller!
+A generalized GUI Builder
 @author Connor McCloskey
 
 To produce executable:
