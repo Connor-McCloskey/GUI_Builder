@@ -2,6 +2,11 @@
 A generalized GUI Builder
 @author Connor McCloskey
 
+Requirements:
+Python 3.10 or later
+CustomTKinter module
+PyInstaller module
+
 To produce executable:
 pyinstaller --onefile -w -F main.py
 --OR--
@@ -56,6 +61,7 @@ class App(ctk.CTk):
         # Loading up a list of all assets in the scene
         self.assets.append(self.button)
         self.assets.append(self.save_button)
+        self.assets.append(self.load_button)
         self.assets.append(self.button_b)
 
     def state_check(self, _event):
