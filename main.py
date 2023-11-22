@@ -38,8 +38,8 @@ class App(ctk.CTk):
         self.side_frame.grid(row=0, column=0, sticky="ns")
 
         # Create buttons
-        self.button = ctk.CTkButton(self.side_frame, text="Open File", command=self.button_func, font=self.font)
-        self.button.grid(row=0, column=0, padx=20, pady=20)
+        self.open_file_button = ctk.CTkButton(self.side_frame, text="Open File", command=self.open_file, font=self.font)
+        self.open_file_button.grid(row=0, column=0, padx=20, pady=20)
 
         self.load_button = ctk.CTkButton(self.side_frame, text="Load Configuration", font=self.font)
         self.load_button.grid(row=1, column=0, padx=20, pady=10)
@@ -59,9 +59,10 @@ class App(ctk.CTk):
         self.bind("<Configure>", self.state_check)
 
         # Loading up a list of all assets in the scene
-        self.assets.append(self.button)
+        self.assets.append(self.open_file_button)
         self.assets.append(self.save_button)
         self.assets.append(self.load_button)
+        self.assets.append(self.add_button)
         self.assets.append(self.button_b)
 
     def state_check(self, _event):
@@ -72,7 +73,7 @@ class App(ctk.CTk):
                 self.bounds_check(i)
 
     # noinspection PyMethodMayBeStatic
-    def button_func(self) -> None:
+    def open_file(self) -> None:
         # path = filedialog.askdirectory()
         path2 = filedialog.askopenfile()
         print(path2)
