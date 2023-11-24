@@ -13,7 +13,8 @@ pyinstaller --onefile -w -F main.py
 pyinstaller GuiBuilder.spec
 """
 import customtkinter as ctk
-from tkinter import filedialog
+from tkinter import filedialog, Menu
+import json
 
 
 class App(ctk.CTk):
@@ -119,6 +120,19 @@ class App(ctk.CTk):
         self.assets.append(new_button)
         new_button.place(x=200, y=50)
         self.register_draggable(new_button)
+
+    # noinspection PyMethodMayBeStatic
+    def run_script(self, script) -> None:
+        file_type = script[-2:]
+        if file_type != "py":
+            return
+        exec(open(script).read())
+
+    def save_configuration(self):
+        pass
+
+    def load_configuration(self):
+        pass
 
 
 def main():
