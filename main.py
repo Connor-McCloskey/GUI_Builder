@@ -31,11 +31,30 @@ import json     # will use JSONs to save/load configurations
 # endregion
 
 
+class ButtonFactory(ctk.CTkToplevel):
+
+    def __int__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print("Buttons")
+        self.geometry("700x500")
+        # self.parent = parent
+
+    def make_button(self):
+        new_button = ctk.CTkButton(self, text="New Button", font=self.parent.font)
+        self.parent.assets.append(new_button)
+        self.parent.register_draggable(new_button)
+        self.quit()
+
+    def test(self):
+        print("Yo")
+
+
 # region App class
 class App(ctk.CTk):
     # region Members
     assets: list
     font: ctk.CTkFont
+    button_maker: ButtonFactory
     # endregion
 
     # region Methods
@@ -143,10 +162,16 @@ class App(ctk.CTk):
         widget.bind("<ButtonRelease-1>", self.on_drag_release)
 
     def new_button(self) -> None:
+        # self.button_maker_window()
         new_button = ctk.CTkButton(self, text="New Button", font=self.font)
         self.assets.append(new_button)
         new_button.place(x=200, y=50)
         self.register_draggable(new_button)
+
+    # In progress, but CTkToplevel is broken maybe?
+    def button_maker_window(self) -> None:
+        self.button_maker = ButtonFactory(self)
+        # self.button_maker.test()
 
     # noinspection PyMethodMayBeStatic
     def run_script(self, script: str) -> None:
