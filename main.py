@@ -7,10 +7,22 @@ Python 3.10 or later
 CustomTKinter module
 PyInstaller module
 
-To produce executable:
+** To produce executable with PyInstaller **
 pyinstaller --onefile -w -F main.py
 --OR--
 pyinstaller GuiBuilder.spec
+
+-- TO DO --
+Most of this is easy, but this is a side project of a side project of a side project, so I'm lazy.
+
+- Create "new button" popup, ability to attach script, name it, etc.
+- Make it so draggables can't go into the side frame...
+- Save/load configurations with JSON
+- Add a "settings" file so a user can autoload a configuration on startup
+    -- or maybe this should be project-based? That would work basically the same. A project could just point to a config
+- Add button grid snapping
+- Add "global" script functionality for user to further modify behavior (script that autoloads on startup)
+- Add button "locking" feature to toggle between "build" and "use" modes
 """
 # region Imports
 import customtkinter as ctk
@@ -53,9 +65,9 @@ class App(ctk.CTk):
         self.save_button = ctk.CTkButton(self.side_frame, text="Save Configuration", font=self.font)
         self.save_button.grid(row=2, column=0, padx=20, pady=10)
 
-        self.button_b = ctk.CTkButton(self, text="Draggable", font=self.font)
-        self.button_b.place(x=200, y=20)
-        self.register_draggable(self.button_b)
+        self.sample_draggable = ctk.CTkButton(self, text="Sample Draggable", font=self.font)
+        self.sample_draggable.place(x=200, y=20)
+        self.register_draggable(self.sample_draggable)
 
         self.add_button = ctk.CTkButton(self.side_frame, text="+", font=self.font, command=self.new_button)
         self.add_button.grid(row=3, column=0, padx=20, pady=10)
@@ -69,7 +81,7 @@ class App(ctk.CTk):
         self.assets.append(self.save_button)
         self.assets.append(self.load_button)
         self.assets.append(self.add_button)
-        self.assets.append(self.button_b)
+        self.assets.append(self.sample_draggable)
 
         # Context menu
         self.context_menu = Menu(self, tearoff=0)
@@ -137,8 +149,8 @@ class App(ctk.CTk):
         self.register_draggable(new_button)
 
     # noinspection PyMethodMayBeStatic
-    def run_script(self, script) -> None:
-        # Ensure the specified script is a valid Python file
+    def run_script(self, script: str) -> None:
+        # Ensure the string is a valid Python file
         if script[-2:] != "py":
             return
         exec(open(script).read())
