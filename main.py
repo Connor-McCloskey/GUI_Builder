@@ -12,16 +12,21 @@ pyinstaller --onefile -w -F main.py
 --OR--
 pyinstaller GuiBuilder.spec
 """
+# region Imports
 import customtkinter as ctk
 from tkinter import filedialog, Menu
-import json
+import json     # will use JSONs to save/load configurations
+# endregion
 
 
+# region App class
 class App(ctk.CTk):
-
+    # region Members
     assets: list
     font: ctk.CTkFont
+    # endregion
 
+    # region Methods
     def __init__(self):
         super().__init__()
         ctk.set_appearance_mode("dark")
@@ -65,6 +70,16 @@ class App(ctk.CTk):
         self.assets.append(self.load_button)
         self.assets.append(self.add_button)
         self.assets.append(self.button_b)
+
+        # Context menu
+        self.context_menu = Menu(self, tearoff=0)
+        self.context_menu.add_command(label="Option1")
+        self.context_menu.add_separator()
+        self.context_menu.add_command(label="Option2")
+        self.bind("<Button-3>", self.create_context_menu)
+
+    def create_context_menu(self, event):
+        self.context_menu.post(event.x_root, event.y_root)
 
     def state_check(self, _event):
         if self.current_state != self.wm_state():
@@ -123,8 +138,8 @@ class App(ctk.CTk):
 
     # noinspection PyMethodMayBeStatic
     def run_script(self, script) -> None:
-        file_type = script[-2:]
-        if file_type != "py":
+        # Ensure the specified script is a valid Python file
+        if script[-2:] != "py":
             return
         exec(open(script).read())
 
@@ -133,8 +148,11 @@ class App(ctk.CTk):
 
     def load_configuration(self):
         pass
+    # endregion
+# endregion
 
 
+# region Main
 def main():
     app = App()
     app.after(3, app.wm_state, 'zoomed')
@@ -143,3 +161,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+# endregion
