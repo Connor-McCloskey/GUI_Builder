@@ -35,6 +35,7 @@ class ButtonFactory(ctk.CTkToplevel):
 
     parent: None
     confirm_button: ctk.CTkButton
+    quit_button: ctk.CTkButton
 
     def __int__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -47,12 +48,22 @@ class ButtonFactory(ctk.CTkToplevel):
         self.parent.bIsMakingNewButton = False
         self.destroy()
 
+    def back_button(self):
+        self.parent.bIsMakingNewButton = False
+        self.destroy()
+
     def start(self, parent):
         self.geometry("700x500")
         self.parent = parent
-        self.title("New Button")
+        self.title("Create Your Button")
+
+        # Confirm Button
         self.confirm_button = ctk.CTkButton(self, text="Create Button", command=self.make_button, font=parent.font)
         self.confirm_button.place(x=20, y=20)
+
+        # Quit Button
+        self.quit_button = ctk.CTkButton(self, text="Back", command=self.back_button, font=parent.font)
+        self.quit_button.place(x=20, y=60)
 
 
 # region App class
@@ -61,7 +72,6 @@ class App(ctk.CTk):
     assets: list
     font: ctk.CTkFont
     bIsMakingNewButton = False
-    # button_maker: ButtonFactory
     # endregion
 
     # region Methods
