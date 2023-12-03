@@ -27,7 +27,7 @@ Most of this is easy, but this is a side project of a side project of a side pro
 # region Imports
 import customtkinter as ctk
 from tkinter import filedialog, Menu
-import json     # will use JSONs to save/load configurations
+# import json     # will use JSONs to save/load configurations
 # endregion
 
 
@@ -36,6 +36,7 @@ class ButtonFactory(ctk.CTkToplevel):
     parent: None
     confirm_button: ctk.CTkButton
     quit_button: ctk.CTkButton
+    script_path: ctk.CTkEntry
 
     def __int__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -63,7 +64,11 @@ class ButtonFactory(ctk.CTkToplevel):
 
         # Quit Button
         self.quit_button = ctk.CTkButton(self, text="Back", command=self.back_button, font=parent.font)
-        self.quit_button.place(x=20, y=60)
+        self.quit_button.place(x=20, y=450)
+
+        # Path for script
+        self.script_path = ctk.CTkEntry(self, placeholder_text="Button Script")
+        self.script_path.place(x=20, y=60)
 
 
 # region App class
